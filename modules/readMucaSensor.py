@@ -332,4 +332,4 @@ ani = animation.FuncAnimation(fig, updatefig, interval=100, blit=True)
 try:
     plt.show()
 finally:
-    skin.close()s
+    skin.close()
