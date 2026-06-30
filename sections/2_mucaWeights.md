@@ -17,12 +17,12 @@ Your objective is to finalize the real-time processing loop within the visualize
 
 #### Task Specifications:
 
-1. **Array Parsing:** Access the parallel input arrays: `intensities` (containing the raw $v_i$ activation values) and `idx_list` (containing spatial matrix data indices).
+1. **Array Parsing:** Access the parallel input arrays: `intensities` (containing the raw $i_i$ activation values) and `idx_list` (containing spatial matrix data indices).
 
 2. **Axis Mapping:** Extract the spatial index values representing the rows. In this environment, the target row data position $y_i$ is mapped as:
    $$y_i = \text{idx\_list}[i]$$
 
-3. **Centroid Equation with Dynamic Normalization:** Compute the absolute cumulative mass denominator $V_{sum}$ first, then calculate the normalized scalar weight factor $w_i$ inside your loop to accurately update the continuous tracking coordinate:
+3. **Centroid Equation with Dynamic Normalization:** Compute the absolute cumulative mass denominator $I_{sum}$ first, then calculate the normalized scalar weight factor $w_i$ inside your loop to accurately update the continuous tracking coordinate:
    $$I_{sum} = \sum_{j=0}^{n-1} \text{Intensities}[j]$$
    $$w_i = \frac{\text{Intensities}[i]}{I_{sum}}$$
    $$\text{InterpolatedPosition} = \sum_{i=0}^{n-1} w_i \cdot y_i $$
