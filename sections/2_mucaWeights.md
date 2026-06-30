@@ -31,5 +31,7 @@ Your objective is to finalize the real-time processing loop within the visualize
 
 #open-button("assets/labs/lab_sensingmuca/lab_mucaSensor.py")
 
+#python-button("assets/labs/lab_sensingmuca/lab_mucaSensor.py")
+
 ::::
 ::::::

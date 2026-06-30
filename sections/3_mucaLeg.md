@@ -117,9 +117,9 @@ Verify the cross-process data streams by running the physical acquisition module
 
 2. Launch the real-time interactive graphic simulation workspace to evaluate positional tracking performance:
 
-#python-button("assets/labs/lab_sensingmuca/lab_sensingmuca.py")
-
-<!-- #runsofa-button("assets/labs/lab_sensingmuca/lab_sensingmuca.py") -->
+#python-button("assets/labs/lab_sensingmuca/modules/readMucaSensor.py")
+#python-button("assets/labs/lab_sensingmuca/lab_mucaSensor.py")
+#runsofa-button("assets/labs/lab_sensingmuca/lab_sensingmuca.py")
 ---
 
 :::::
