@@ -274,21 +274,19 @@ class Controller(Sofa.Core.Controller):
             # TODO: Calculate the weighted position of the detected points
             # =======================================================
 
-            if IdxList.size > 0 and WeightList.size > 0 and np.sum(WeightList) > 0:
-                Vsum = np.sum(WeightList) # sum(vij)
-                Sum = np.array([0.0, 0.0, 0.0])  
+            if len(IdxList) > 0 and WeightList.size > 0 and np.sum(WeightList) > 0:
+                
+                InterpolatedPosition = 0.0  
+
+
                 for (i, Idx) in enumerate(IdxList):
-                    if isinstance(Idx, (list, np.ndarray)) and len(Idx) > 1:
-                        LinearIdx = int(Idx[0])
-                    else:
-                        LinearIdx = int(Idx)
+                    LinearIdx = int(Idx)
                       
                     Wi = None #(wij)
                     Coords3D = None  #(g_w)
-                    Sum = None 
+                    InterpolatedPosition = None
 
-
-                self.SphereROI.centers.value = [Sum.tolist()] 
+                self.SphereROI.centers.value = [InterpolatedPosition.tolist()] 
 
             else:             
                 self.SphereROI.centers.value = [[0.0, 0.0, 0.0]]

@@ -17,6 +17,7 @@ from scipy.signal import find_peaks
 
 np.set_printoptions(suppress=True, precision=3)
 os.makedirs(f"{os.path.dirname(os.path.abspath(__file__))}/mucaData", exist_ok=True)
+
 class serialData:
     def __init__(self, port="/dev/proxception", numValues=1, bytesPerValue=2, valueArrayDepth=1):
         self.port = port
@@ -122,7 +123,7 @@ class serialData:
 
 def getIntensities(IdxList, Matrix):
     IntensitiesList = []
-    for x, y in IdxList:
+    for y in IdxList:
         if 0 <= y < len(Matrix):
             Intensity = Matrix[y, 0]
         else:
@@ -134,25 +135,20 @@ def getIntensities(IdxList, Matrix):
 
     IntensitiesList = np.array(IntensitiesList)
     if np.sum(IntensitiesList) == 0:
-        return np.array([0.0, 0.0])
-
-    IntensitiesList = IntensitiesList #/ np.sum(IntensitiesList)
-    for i in range(len(IdxList)):
-        IdxList[i][0], IdxList[i][1] = IdxList[i][1], IdxList[i][0]
+        return np.array([0.0])
 
     np.savetxt(f"{os.path.dirname(os.path.abspath(__file__))}/mucaData/IntensitiesList.txt", IntensitiesList)
     np.savetxt(f"{os.path.dirname(os.path.abspath(__file__))}/mucaData/IdxList.txt", IdxList, fmt='%i')
     
-    IntensitiesCoords = np.sum(IdxList * IntensitiesList[:, None], axis=0)
-    return IntensitiesCoords
+    IntensitiesCoords = np.sum(IdxList * IntensitiesList) / np.sum(IntensitiesList)
+    return np.array([IntensitiesCoords])
 
 
 def getNeighborIdxs(IdxY, TouchResolution): 
     IdxList = []
-    i = 0
     for j in range(IdxY - 1, IdxY + 2):
         if 0 <= j < TouchResolution:
-            IdxList.append([i, j])
+            IdxList.append(j)
     return IdxList
 
 
@@ -336,4 +332,4 @@ ani = animation.FuncAnimation(fig, updatefig, interval=100, blit=True)
 try:
     plt.show()
 finally:
-    skin.close() 
+    skin.close()s

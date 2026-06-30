@@ -16,9 +16,9 @@ The pipeline integrates two distinct sensory tracking systems:
 
 Before modifying the controller, it is vital to understand how spatial reference frames interact within the `createScene` hierarchy:
 
-* **Rigid Transformations via Markers:** The `Markers` and `markerLeg` nodes receive real-time optical tracking frames from external AprilTag detectors. In the simulation, these markers act as **Effectors**; moving the physical object transforms the virtual constraints dynamically.
+* **Rigid Transformations via Markers:** The `Markers` and `markerLeg` nodes receive real-time optical tracking frames from external AprilTag detectors. In the simulation, these markers act as **Effectors**, moving the physical object transforms the virtual constraints dynamically.
 
-* **Surface Point Projection (`PointsOnSurface`):** The deformable model lacks fixed sensor nodes. To solve this, a point cloud representing the MuCa sensor geometry (`PointsOnSurface.txt`) is loaded and permanently bound to the leg's outer shell using **Barycentric Mapping**. If the leg bends or deforms, these virtual surface points track the underlying finite element mesh.
+* **Surface Point Projection (`PointsOnSurface`):** A point cloud representing the MuCa sensor geometry (`PointsOnSurface.txt`) is loaded and permanently bound to the leg using **Barycentric Mapping**. If the leg bends or deforms, these virtual surface points track the underlying finite element mesh.
 
 ---
 
@@ -41,11 +41,11 @@ $$
 Where:
 - $i_i$ represents the intensity stored in `IntensityList[i]`.
 - $w_i$ is the normalized scalar weight contribution of the neighbor node ($i$).
-- $\mathbf{P}_{\text{Node}}[i]$ is the structural positional vertex vector extracted using the index mappings inside `IdxList`.
+- $\mathbf{P}_{\text{Node}}[i]$ is the position vector extracted using the index mappings inside `IdxList`.
 
 The computed coordinate $\mathbf{InterpolatedPosition}$ acts as the dynamic origin center of a volumetric `SphereROI` (Region of Interest). A `ForcePointActuator` (FPA) queries this ROI to compute local surface deformation normal vectors and inject corresponding mechanical forces into the system.
 
-Open the primary workspace script to begin configuration:
+Open the workspace script to begin configuration:
 #open-button("assets/labs/lab_sensingmuca/lab_sensingmuca.py")
 
 ---
@@ -54,7 +54,7 @@ Open the primary workspace script to begin configuration:
 
 **Exercise 1: Scene Architecture & Tactile Workspace (`createScene`)**
 
-Your first task is to construct the foundational scene topology within the `createScene` function by linking the physical tracking nodes to the virtual components.
+Your first task is to construct the scene topology within the `createScene` function by linking the physical tracking nodes to the virtual components.
 
 1. **Position Effectors (Optical Frame Binding)**
    - Instantiate a `PositionEffector` object and attach it as a component to the core center-part marker node (`Markers`).
