@@ -107,18 +107,18 @@ Locate the `onAnimateBeginEvent` routine inside the controller class. You must r
 
 ---
 
-### Verification & System Validation
+### SIMULATION
 
-Verify the cross-process data streams by running the physical acquisition modules concurrently with the numerical SOFA solver workspace engine:
+To simulate you should:
 
-1. Initialize the background serial communication loop handler to stream raw input indices from the hardware connection:
+1. Initialize the touching sensing:
 <!-- #open-button("assets/labs/lab_sensingmuca/modules/readMucaSensor.py") -->
 #python-button("assets/labs/lab_sensingmuca/modules/readMucaSensor.py")
+#python-button("assets/labs/lab_sensingmuca/lab_mucaSensor.py")
+
 
 2. Launch the real-time interactive graphic simulation workspace to evaluate positional tracking performance:
 
-#python-button("assets/labs/lab_sensingmuca/modules/readMucaSensor.py")
-#python-button("assets/labs/lab_sensingmuca/lab_mucaSensor.py")
 #runsofa-button("assets/labs/lab_sensingmuca/lab_sensingmuca.py")
 ---
 
