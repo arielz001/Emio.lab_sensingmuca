@@ -3,9 +3,9 @@
 
 In this workshop, you will implement a **Discrete Center-of-Mass (Centroid)** algorithm to achieve sub-pixel spatial resolution. Instead of just identifying which raw sensor node has the highest signal, you will dynamically calculate the exact position of a touch by interpolating adjacent taxel node weights in a single collapsed column vector.
 
-$$\text{Interpolated Position} = \sum_{i=0}^{n} w_i \cdot i_i  $$
+$$\text{Interpolated Position} = \sum_{i=0}^{n-1} w_i \cdot y_i  $$
 
-Where $w_i$ is the dynamically normalized weight of taxel $i$, derived from the intensities values $i_i$.
+Where $w_i$ is the dynamically normalized weight of taxel $i$, derived from the position values $y_i$.
 
 ---
 
