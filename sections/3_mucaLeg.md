@@ -55,8 +55,7 @@ Your first task is to modify the scene topology within the `createScene` functio
 
 #open-button("assets/labs/lab_sensingmuca/lab_sensingmuca.py")
 
-#runsofa-button("assets/labs/lab_sensingmuca/lab_sensingmuca.py")
-
+You cannot run yet, because you need to implement the center-of-mass algorithm in the following excercise.
 ::::
 
 ---

@@ -207,8 +207,10 @@ class Controller(Sofa.Core.Controller):
                 
             new_center_full = markers_pos.copy()
             new_center_full[0][0:3] = new_center
-            self.PositionEffectorMarker.effectorGoal.value = new_center_full
-
+            try:
+                self.PositionEffectorMarker.effectorGoal.value = new_center_full
+            except:
+                pass
 
         # ====================================
         #  LEG TAG FOLLOWING 
@@ -223,8 +225,10 @@ class Controller(Sofa.Core.Controller):
 
         new_leg_full = secondMarker_pos.copy()
         new_leg_full[0][0:3] = new_leg
-        self.SecondPositionEffectorMarker.effectorGoal.value = new_leg_full
-
+        try:
+            self.SecondPositionEffectorMarker.effectorGoal.value = new_leg_full
+        except:
+            pass
         # ================================================
         #                DRAW PATH
         # ================================================
@@ -265,8 +269,10 @@ class Controller(Sofa.Core.Controller):
             detected_idxs = self.SphereROI.indices.value
             if len(detected_idxs) > 0:
                 indice_selected = detected_idxs[int(len(detected_idxs)//2)]
-                self.FPA.indices.value = [indice_selected]
-
+                try:
+                    self.FPA.indices.value = [indice_selected]
+                except:
+                    pass
             self.counter += 1
 
 
@@ -301,10 +307,12 @@ class Controller(Sofa.Core.Controller):
 
             if len(Points) >= 1: 
                 self.lost_steps_counter = 0
-                self.FPA.maxForceVariation.value = 10.0
-                self.FPA.maxForce.value = 5000
-                self.FPA.minForce.value = 0
-                
+                try:
+                    self.FPA.maxForceVariation.value = 10.0
+                    self.FPA.maxForce.value = 5000
+                    self.FPA.minForce.value = 0
+                except:
+                    pass
                 directions_list = []
                     
                 for i, idx in enumerate(idxs):
@@ -325,7 +333,10 @@ class Controller(Sofa.Core.Controller):
                 # --- mean calculation ---
                 if len(directions_list) > 0:
                     avg_direction = np.mean(directions_list, axis=0)
-                    self.FPA.direction.value = avg_direction.tolist()
+                    try:
+                        self.FPA.direction.value = avg_direction.tolist()
+                    except:
+                        pass
                 else:
                     print("No points met the condition idx < halfTotalPoints to calculate direction.")
 
@@ -335,24 +346,25 @@ class Controller(Sofa.Core.Controller):
                     self.lost_steps_counter = 0
                     
                 self.lost_steps_counter += 1
-                
-                if self.lost_steps_counter <= 4:
-                    self.FPA.maxForceVariation.value = 10.0
-                    self.FPA.maxForce.value = 100
-                    self.FPA.minForce.value = 0
-                else:
-                    self.SphereROI.indices.value = []
-                    self.FPA.indices.value = []
-                    self.FPA.maxForceVariation.value =  1000000000
-                    self.FPA.maxForce.value = 0
-                    self.FPA.minForce.value = 0
-                    self.FPA.direction.value = [-0.7, 0.5, 0.0]
-                    
+                try:
+                    if self.lost_steps_counter <= 4:
+                        self.FPA.maxForceVariation.value = 10.0
+                        self.FPA.maxForce.value = 100
+                        self.FPA.minForce.value = 0
+                    else:
+                        self.SphereROI.indices.value = []
+                        self.FPA.indices.value = []
+                        self.FPA.maxForceVariation.value =  1000000000
+                        self.FPA.maxForce.value = 0
+                        self.FPA.minForce.value = 0
+                        self.FPA.direction.value = [-0.7, 0.5, 0.0]
+                except:
+                    pass
         else:
-                self.FPA.indices.value = []
-                self.FPA.maxForceVariation.value =  1000000000
-                self.FPA.maxForce.value = 0
-                self.FPA.minForce.value = 0
+            self.FPA.indices.value = []
+            self.FPA.maxForceVariation.value =  1000000000
+            self.FPA.maxForce.value = 0
+            self.FPA.minForce.value = 0
 
 
 
@@ -585,7 +597,7 @@ def createScene(rootnode):
 
 
     SphereROI.init()
-    FPA.init()
+    # FPA.init()
 
     try:
         tracker = ApriltagTracker(name="ApriltagTracker",
