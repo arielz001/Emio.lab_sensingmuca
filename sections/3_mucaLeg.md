@@ -67,16 +67,12 @@ You cannot run yet, because you need to implement the center-of-mass algorithm i
 Locate the `onAnimateBeginEvent` routine inside the controller class. You must replace the blank expressions (`None` structures) with functional statement loops that process the incoming matrices.
 
 #### Step-by-Step Task Specifications:
-1. **Array Validation:** Extract data length attributes from the parallel arrays: `IntensityList` (containing $i_i$ values) and `IdxList` (containing spatial data indices).
-
-2. **:** 
-$I_{sum}$:
-   $$I_{sum} = \sum_{i=0}^{n-1} \text{IntensityList}[i]$$
+1. **Array Validation:** Extract data length attributes from the parallel arrays: `WeightList` (containing $w_i$ values) and `IdxList` (containing spatial data indices).
 
 3. **Centroid Weight Vector Processing (3D Mapping):** Loop through your active neighbor matrices ($N$). Unlike the 2D workspace, you must calculate a 3D target coordinate vector ($\mathbf{InterpolatedPosition}$). For every iteration, retrieve the physical 3D vertex coordinate ($\mathbf{P}_{\text{linearIdx}}$) from the simulation mesh using the specific node index, normalize its scalar weight component, and update your cumulative accumulator:
    
    * **Mathematical Formulation:**
-     $$w_i = \frac{\text{IntensityList}[i]}{I_{sum}}$$
+     $$w_i = \text{WeightList}[i]$$
      $$\mathbf{InterpolatedPosition} = \sum_{i=0}^{n-1} \left( \mathbf{P}_{\text{linearIdx}} \cdot w_i \right)$$
 
    * **Implementation Guidelines:**
