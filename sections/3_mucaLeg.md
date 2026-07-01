@@ -123,7 +123,6 @@ To simulate you should:
 #python-button("assets/labs/lab_sensingmuca/modules/readMucaSensor.py")
 #python-button("assets/labs/lab_sensingmuca/lab_mucaSensor.py")
 
-
 2. Launch the real-time interactive graphic simulation workspace to evaluate positional tracking performance:
 
 #runsofa-button("assets/labs/lab_sensingmuca/lab_sensingmuca.py")
