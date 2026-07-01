@@ -272,6 +272,10 @@ class Controller(Sofa.Core.Controller):
 
             # =======================================================
             # TODO: Calculate the weighted position of the detected points
+            # HINT: To access to 3d position of the touching points in the scene,
+            #       use the following code:
+            #       self.TouchPointsMO.position.value
+            #       note that is an array, so you should select the idx
             # =======================================================
 
             if len(IdxList) > 0 and WeightList.size > 0 and np.sum(WeightList) > 0:
@@ -283,7 +287,7 @@ class Controller(Sofa.Core.Controller):
                     LinearIdx = int(Idx)
                       
                     Wi = None #(wij)
-                    Coords3D = None  #(g_w)
+                    PointPosition3D = None  #(g_w)
                     InterpolatedPosition = None
 
                 self.SphereROI.centers.value = [InterpolatedPosition.tolist()] 
