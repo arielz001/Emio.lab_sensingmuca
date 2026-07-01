@@ -14,6 +14,11 @@ import matplotlib.pyplot as plt
 import matplotlib.animation as animation
 from matplotlib.widgets import Button, Slider
 from scipy.signal import find_peaks
+from serial.tools import list_ports
+
+ports_availables = list(list_ports.comports())
+# only /dev/ttyUSB ports
+ports_available = [port.device for port in ports_availables if port.device.startswith('/dev/ttyUSB')]
 
 np.set_printoptions(suppress=True, precision=3)
 os.makedirs(f"{os.path.dirname(os.path.abspath(__file__))}/mucaData", exist_ok=True)
@@ -181,11 +186,33 @@ ImgRows, ImgCols = 12, 2
 indices_sensor = np.arange(FILAS)
 
 # --- SENSOR INITIALIZATION ---
-skin = serialData(port="/dev/proxception", numValues=numValues, bytesPerValue=2, valueArrayDepth=100)
+portsargs = [arg for arg in sys.argv if arg.startswith('/dev/ttyUSB')]
+last_port = None
+if len(portsargs) >= 2:
+    port = portsargs[-1]         
+    last_port = portsargs[-2] 
+elif len(portsargs) == 1:
+    port = portsargs[0]
+    last_port = port
+else:
+    port = ports_available[0] if ports_available else "/dev/proxception"
+    last_port = port
+print(f"Connecting to port: {port} (Backup port: {last_port})")
+
+skin = serialData(port=port, numValues=numValues, bytesPerValue=2, valueArrayDepth=100)
 skin.readSerialStart()
+time.sleep(0.1) 
+if not skin.isRun or not skin.isReceiving:
+    if port != last_port:
+        skin.close()
+        plt.close('all')
+        script_path = os.path.abspath(__file__)
+        os.execve(sys.executable, [sys.executable, script_path, last_port], os.environ)
+
 
 for _ in range(10):
     skin.getSerialDataOffset()
+
 
 # --- GUI SETUP ---
 fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(11, 6))
@@ -289,13 +316,20 @@ def updatefig(*args):
     Iteration += 1
     return im, linea_peaks,
 
-
-# --- GUI EVENT HANDLERS & BUTTONS ---
 def reset_program(event):
     print("\n--- [REINIT PROGRAM] ---\n")
     skin.close()  
     plt.close('all')
     os.execv(sys.executable, ['python'] + sys.argv)
+
+def reset_program_with_port(selected_port):
+    global port 
+    print(f"\n--- [REBOOTING WITH PORT: {selected_port}] ---\n")
+    skin.close()
+    plt.close('all')
+    script_path = os.path.abspath(__file__)
+    args = [sys.executable, script_path, selected_port, port]
+    os.execve(sys.executable, args, os.environ)
 
 anim_running = True
 
@@ -312,6 +346,9 @@ def toggle_animation(event):
         anim_running = True
         print("\n--- [ANIMATION RESUMED] ---\n")
     fig.canvas.draw_idle()
+
+
+
 
 def update_touch_threshold(val):
     global TOUCHTHRESHOLD
@@ -334,6 +371,14 @@ slider_ax = plt.axes([0.15, 0.2, 0.03, 0.6])  # izquierda, abajo, ancho, alto
 slider_touch = Slider(slider_ax,'Touch Threshold', 0, 50 ,valinit=TOUCHTHRESHOLD, valfmt='%1.0f', orientation='vertical')
 slider_touch.on_changed(update_touch_threshold)
 
+#twobuttons usb port selection
+buttons = []    
+for i, p_name in enumerate(ports_available):
+    ax = plt.axes([0.05 + i * 0.1, 0.05, 0.09, 0.05])
+    btn = Button(ax, p_name)
+    btn.on_clicked(lambda event, p=p_name: reset_program_with_port(p))
+    buttons.append(btn)
+    
 # --- START APPLICATION ---
 ani = animation.FuncAnimation(fig, updatefig, interval=100, blit=True)
 
