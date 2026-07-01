@@ -435,10 +435,10 @@ def createScene(rootnode):
                       showObject=True, showObjectScale=5, drawMode=1, showColor=[0, 0.0, 1, 1])
     
     # TODO: INSTANCE THE POSITIONEFFECTOR MARKER (CENTERPART) 
-    # PositionEffectorMarker = None
-    PositionEffectorMarker = markers.addObject(None, 
-                                               indices=[0], 
-                                               effectorGoal=[0,0,0])
+    PositionEffectorMarker = None
+    # PositionEffectorMarker = markers.addObject(None, 
+    #                                            indices=[0], 
+    #                                            effectorGoal=[0,0,0])
 
 
     # THIS IS FOR THE WAY 
