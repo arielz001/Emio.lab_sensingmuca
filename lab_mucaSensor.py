@@ -13,9 +13,9 @@ SENSOR_ROWS = 12
 VISUAL_COLUMNS = 1
 
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
-PATH_IDX = os.path.join(BASE_DIR, "TouchSim", "mucaData", "IdxList.txt")
-PATH_INTENSITIES = os.path.join(BASE_DIR, "TouchSim", "mucaData", "IntensitiesList.txt")
-PATH_OUTPUT_WEIGHTS = os.path.join(BASE_DIR, "TouchSim", "mucaData", "WeightList.txt")
+PATH_IDX = os.path.join(BASE_DIR, "modules", "mucaData", "IdxList.txt")
+PATH_INTENSITIES = os.path.join(BASE_DIR, "modules", "mucaData", "IntensitiesList.txt")
+PATH_OUTPUT_WEIGHTS = os.path.join(BASE_DIR, "modules", "mucaData", "WeightList.txt")
 
 # =====================================================================
 # GRAPHICAL INTERFACE SETUP
