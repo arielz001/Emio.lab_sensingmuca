@@ -12,7 +12,7 @@ import sys
 import os
 import matplotlib.pyplot as plt
 import matplotlib.animation as animation
-from matplotlib.widgets import Button
+from matplotlib.widgets import Button, Slider
 from scipy.signal import find_peaks
 
 np.set_printoptions(suppress=True, precision=3)
@@ -313,6 +313,10 @@ def toggle_animation(event):
         print("\n--- [ANIMATION RESUMED] ---\n")
     fig.canvas.draw_idle()
 
+def update_touch_threshold(val):
+    global TOUCHTHRESHOLD
+    TOUCHTHRESHOLD = val
+    print(f"Touch Threshold: {TOUCHTHRESHOLD}")
 
 plt.subplots_adjust(bottom=0.25)
 
@@ -325,6 +329,10 @@ reset_button.on_clicked(reset_program)
 pause_ax = plt.axes([0.52, 0.05, 0.12, 0.06])
 play_pause_button = Button(pause_ax, 'Pause')
 play_pause_button.on_clicked(toggle_animation)
+
+slider_ax = plt.axes([0.15, 0.2, 0.03, 0.6])  # izquierda, abajo, ancho, alto
+slider_touch = Slider(slider_ax,'Touch Threshold', 0, 50 ,valinit=TOUCHTHRESHOLD, valfmt='%1.0f', orientation='vertical')
+slider_touch.on_changed(update_touch_threshold)
 
 # --- START APPLICATION ---
 ani = animation.FuncAnimation(fig, updatefig, interval=100, blit=True)

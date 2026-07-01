@@ -6,13 +6,13 @@ This laboratory establishes a real-time touching sensing loop adapted to Emio. I
 
 The pipeline integrates two distinct sensory tracking systems:
 
-1. **Global Optical Tracking (AprilTags / Markers):** A camera array tracks rigid coordinate frames (Markers) placed on the physical setup. This defines the spatial transformation matrices ($T_{\text{world} \to \text{leg}}$) required to align the virtual asset's rest frame with the real environment.
+1. **Global Optical Tracking (AprilTags / Markers):** A camera array tracks rigid coordinate frames (Markers) placed on the physical setup. 
 
 2. **Local Tactile Matrix (MuCa Sensor):** A MuCa matrix wrapped around the leg captures local deformation forces. Continuous sub-pixel coordinates are reconstructed from discrete taxel activations using a centroid interpolation model.
 
 ---
 
-###  The Sensory Infrastructure: Understanding Markers & Projectors
+###  The Sensory Infrastructure
 
 Before modifying the controller, it is vital to understand how spatial reference frames interact within the `createScene` hierarchy:
 

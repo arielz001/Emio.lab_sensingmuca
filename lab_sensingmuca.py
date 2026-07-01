@@ -46,7 +46,7 @@ class Controller(Sofa.Core.Controller):
         self.followpathMO = kwargs.get('followpathMO')
         self.path2follow = kwargs.get('path2follow')
         print('Finished Init')
-        self.following_active = False
+        self.following_active = True
         self.indice_ruta_actual = 0
 
         self.LegTagDeformable = kwargs.get('LegTagDeformable')
