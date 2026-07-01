@@ -63,16 +63,16 @@ def laboratorio_update(frame):
                 InterpolatedPosition = 0.0
                 weightList = []
                 
+                Isum = None
+                
+                if Isum > 0:
+                    for i in range(len(intensities)):
+                        wi = None
+                        virtual_row = None
+                        InterpolatedPosition += None
 
-
-
-
-
-
-
-
-
-
+                        weightList.append(wi)
+                
                 os.makedirs(os.path.dirname(PATH_OUTPUT_WEIGHTS), exist_ok=True)
                 np.savetxt(PATH_OUTPUT_WEIGHTS, weightList)
                 # -----------------------------------------------------
