@@ -84,6 +84,15 @@ Locate the `onAnimateBeginEvent` routine inside the controller class. You must r
 
 #open-button("assets/labs/lab_sensingmuca/lab_sensingmuca.py")
 
+You need to run the code to get intensities first:
+
+#python-button("assets/labs/lab_sensingmuca/modules/readMucaSensor.py")
+
+Now you can run the script to get the interpolated position:
+
+#python-button("assets/labs/lab_sensingmuca/lab_mucaSensor.py")
+
+You can run the main scene now:
 #runsofa-button("assets/labs/lab_sensingmuca/lab_sensingmuca.py")
 
 ::::
