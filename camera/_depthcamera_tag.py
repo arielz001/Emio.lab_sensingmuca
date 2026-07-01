@@ -214,7 +214,7 @@ class DepthCamera:
         overlay = frame.copy()
         # corrected_overlay = self.corregir_gamma(overlay, gamma=5.0)
         corrected_overlay = self.clahe_effect(overlay)
-        corrected_overlay[:,:int(overlay.shape[1]//1.6)] = overlay[:,:int(overlay.shape[1]//1.6)]
+        corrected_overlay[:,:int(overlay.shape[1]//2.5)] = overlay[:,:int(overlay.shape[1]//2.5)]
         overlay2 = corrected_overlay
         overlay2 = cv.detailEnhance(overlay2, sigma_s=5, sigma_r=0.2)
         # overlay = cv.edgePreservingFilter(overlay, flags=1, sigma_s=64, sigma_r=0.2)
