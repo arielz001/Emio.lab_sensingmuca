@@ -274,7 +274,7 @@ class Controller(Sofa.Core.Controller):
             # TODO: Calculate the weighted position of the detected points
             # HINT: To access to 3d position of the touching points in the scene,
             #       use the following code:
-            #       self.TouchPointsMO.position.value
+            #       self.POSNodeMO.position.value
             #       note that is an array, so you should select the idx
             # =======================================================
 
