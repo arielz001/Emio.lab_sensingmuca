@@ -44,7 +44,7 @@ Before measuring forces with the MuCa sensors, configure the motors so that they
 
 2. Access the corresponding `JointActuator` of each motor.
 
-3. Modify the actuator parameter that limits the angular variation so that all motors remain locked during the simulation.
+3. Modify the actuator parameter that limits the angular variation so that all motors remain locked during the simulation. (motor_number.JointActuator.maxAngleVariation.value = 0)
 
 #open-button("assets/labs/lab_sensingmuca/lab_sensingmuca.py")
 

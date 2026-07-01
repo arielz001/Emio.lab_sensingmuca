@@ -2,7 +2,7 @@
 
 ## Leg adapted with MuCa
 
-For the following scene, you could acces to the official documentation [here]().
+For the following scene, you could acces to the official documentation [here](https://sofa-framework.github.io/doc/components/statecontainer/mechanicalobject/).
 
 This laboratory establishes a real-time touching sensing loop adapted to Emio. It bridges a physical deformable leg tracking environment with an interactive **SOFA (Simulation Open Framework Architecture)** simulation.
 

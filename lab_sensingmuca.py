@@ -46,7 +46,7 @@ class Controller(Sofa.Core.Controller):
         self.followpathMO = kwargs.get('followpathMO')
         self.path2follow = kwargs.get('path2follow')
         print('Finished Init')
-        self.following_active = True
+        self.following_active = False
         self.indice_ruta_actual = 0
 
         self.LegTagDeformable = kwargs.get('LegTagDeformable')
@@ -272,10 +272,6 @@ class Controller(Sofa.Core.Controller):
 
             # =======================================================
             # TODO: Calculate the weighted position of the detected points
-            # HINT: To access to 3d position of the touching points in the scene,
-            #       use the following code:
-            #       self.POSNodeMO.position.value
-            #       note that is an array, so you should select the idx
             # =======================================================
 
             if len(IdxList) > 0 and WeightList.size > 0 and np.sum(WeightList) > 0:
@@ -287,7 +283,7 @@ class Controller(Sofa.Core.Controller):
                     LinearIdx = int(Idx)
                       
                     Wi = None #(wij)
-                    PointPosition3D = None  #(g_w)
+                    Coords3D = None  #(g_w)
                     InterpolatedPosition = None
 
                 self.SphereROI.centers.value = [InterpolatedPosition.tolist()] 
@@ -439,8 +435,10 @@ def createScene(rootnode):
                       showObject=True, showObjectScale=5, drawMode=1, showColor=[0, 0.0, 1, 1])
     
     # TODO: INSTANCE THE POSITIONEFFECTOR MARKER (CENTERPART) 
-    PositionEffectorMarker = None
-
+    # PositionEffectorMarker = None
+    PositionEffectorMarker = markers.addObject(None, 
+                                               indices=[0], 
+                                               effectorGoal=[0,0,0])
 
 
     # THIS IS FOR THE WAY 
@@ -491,6 +489,9 @@ def createScene(rootnode):
 
     # TODO: INSTANCE THE POSITIONEFFECTOR MARKER (LEGPART)
     SecondPositionEffectorMarker = None
+    # SecondPositionEffectorMarker = markerLeg.addObject(None, 
+    #                                                    indices=[0], 
+    #                                                    effectorGoal=[0,0,0])
 
     # ===========================================
     #            Tactile Sensing
@@ -499,6 +500,7 @@ def createScene(rootnode):
     # TODO: CREATE A CHILDNODE FOR THETACTILE SENSING AS CHILD OF LEGTAG
     
     PointsOnSurfaceNode = None
+    # PointsOnSurfaceNode = LegTag.addChild("PointsOnSurfaceNode")
 
     POS = np.loadtxt(TouchSim_dir + "PointsOnSurface.txt")
 
@@ -514,7 +516,16 @@ def createScene(rootnode):
 
     POSNodeMO = None
 
+    # POSNodeMO = PointsOnSurfaceNode.addObject(None,
+    #                           position=None, 
+    #                           showObject=True, 
+    #                           showObjectScale=25,
+    #                           translation = None, 
+    #                           rotation = None,
+    #                           showColor=[1, 0, 0, 1])
+    
     # TODO: CREATE A BARYCENTRIC MAPPING FOR THE POSNodeMO
+    PointsOnSurfaceNode.addObject("None")
     
     # ==========================================
     #   Generating points to get direction of fpa
@@ -554,14 +565,25 @@ def createScene(rootnode):
 
     SphereROI = None
 
+    # SphereROI = FPANode.addObject("SphereROI", name="sphereROI", 
+    #                                 centers=None, 
+    #                                 radii=5,
+    #                                 drawSphere=True, 
+    #                                 position="@MechanicalObject.position")
  
-    # TODO: CREATE A FPA FOR THE SPHEREROI
+    # TODO: CREATE A ForcePointActuator FOR THE SPHEREROI
     # HINT: indices='@SphereROI.indices'
     # HINT: you should be set the maxForce and minForce, also the maxForceVariation (recommended 100)
 
     FPA = None
    
-    
+  
+    # FPA = FPANode.addObject('None', name='FPA3', template='Vec3', 
+    #                             direction=[0,1,0], indices='@SphereROI.indices',
+    #                             maxForce=None, minForce=-None, showForce=True, visuScale=30, 
+    #                             printLog=True, maxForceVariation=None)
+
+
     SphereROI.init()
     FPA.init()
 
