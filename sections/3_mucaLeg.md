@@ -8,13 +8,16 @@ This laboratory establishes a real-time touching sensing loop adapted to Emio. I
 
 The pipeline integrates two distinct sensory tracking systems:
 
-1. **Global Optical Tracking (AprilTags / Markers):** A camera array tracks rigid coordinate frames (Markers) placed on the physical setup. 
-
-2. **Local Tactile Matrix (MuCa Sensor):** A MuCa matrix wrapped around the leg captures local deformation forces. Continuous sub-pixel coordinates are reconstructed from discrete taxel activations using a centroid interpolation model (now in 3D).
+1. **Local Tactile Matrix (MuCa Sensor):** A MuCa matrix wrapped around the leg captures local deformation forces. Continuous sub-pixel coordinates are reconstructed from discrete taxel activations using a centroid interpolation model (now in 3D).
 
 The modified Leg can be appreciated in the following image:
 
 ![](assets/labs/lab_sensingmuca/data/images/ModifiedLeg.png){width=60% .center}
+
+
+2. **Global Optical Tracking (AprilTags / Markers):** A camera array tracks rigid coordinate frames (Markers) placed on the physical setup. 
+
+
 
 ---
 
@@ -22,38 +25,12 @@ The modified Leg can be appreciated in the following image:
 
 Before modifying the controller, it is vital to understand how spatial reference frames interact within the `createScene` hierarchy:
 
-* **Rigid Transformations via Markers:** The `Markers` and `markerLeg` nodes receive real-time optical tracking frames from external AprilTag detectors. In the simulation, these markers act as **Effectors**, moving the physical object transforms the virtual constraints dynamically.
 
-* **Surface Point Projection (`PointsOnSurface`):** A point cloud representing the MuCa sensor geometry (`PointsOnSurface.txt`) is loaded and permanently bound to the leg using **Barycentric Mapping**. If the leg bends or deforms, these virtual surface points track the underlying finite element mesh.
+* **Surface Point Projection (`PointsOnSurface`):** A point cloud representing the MuCa sensor geometry (`PointsOnSurface.txt`) is loaded and permanently bound to the leg using **Barycentric Mapping**. If the leg deforms, these virtual surface points track the underlying finite element mesh.
 
 
----
 
-### Continuous Centroid Mapping
-
-To compute the interactive contact point without spatial pixelation, the discrete localized activations are converted into a single weighted contact center vector ($\mathbf{InterpolatedPosition}$):
-
-$$
-I_{sum} = \sum_{i \in N} i_{i}
-$$
-
-$$
-w_{i} = \frac{i_{i}}{I_{sum}}
-$$
-
-$$
-\mathbf{InterpolatedPosition} = \sum_{i \in N} \left( w_{i} \cdot \mathbf{P}_{\text{Node}}[i] \right)
-$$
-
-Where:
-- $i_i$ represents the intensity stored in `IntensityList[i]`.
-- $w_i$ is the normalized scalar weight contribution of the neighbor node ($i$).
-- $\mathbf{P}_{\text{Node}}[i]$ is the position vector extracted using the index mappings inside `IdxList`.
-
-The computed coordinate $\mathbf{InterpolatedPosition}$ acts as the dynamic origin center of a volumetric `SphereROI` (Region of Interest). A `ForcePointActuator` (FPA) queries this ROI to compute local surface deformation normal vectors and inject corresponding mechanical forces into the system.
-
-Open the workspace script to begin configuration:
-#open-button("assets/labs/lab_sensingmuca/lab_sensingmuca.py")
+* **Rigid Transformations via Markers:** The `Markers` and `markerLeg` nodes receive real-time optical tracking frames from external AprilTag detectors. In the simulation, these markers act as **Effectors**, moving  the virtual constraints dynamically according to the motion of the leg in the physical setup.
 
 ---
 
@@ -61,24 +38,25 @@ Open the workspace script to begin configuration:
 
 **Exercise 1: Scene Architecture & Tactile Workspace (`createScene`)**
 
-Your first task is to construct the scene topology within the `createScene` function by linking the physical tracking nodes to the virtual components.
+Your first task is to modify the scene topology within the `createScene` function by linking the physical tracking nodes to the virtual components.
 
-1. **Position Effectors (Optical Frame Binding)**
-   - Instantiate a `PositionEffector` object and attach it as a component to the core center-part marker node (`Markers`).
-   - Instantiate a secondary `PositionEffector` object and attach it to the tracked leg marker node (`markerLeg`).
-
-2. **Surface Point Projection Topology**
-   - Create a child node named `PointsOnSurfaceNode` directly under the parent `LegTag` structural container.
-   - Configure a data loader component to read coordinates from `PointsOnSurface.txt`.
-   - Instantiate the target mechanical object container `POSNodeMO` with the following rigid spatial calibration transforms to match the physical camera origin:
+1. **Surface Point Projection Topology**
+   - Create a child node named `PointsOnSurfaceNode` directly under the parent `LegTag` node.
+   - Instantiate the target mechanical object  `POSNodeMO` with the following rigid spatial calibration transforms to match the physical camera origin:
      - `translation = [100.0, 0.0, 0.0]`
      - `rotation = [0.0, -90.0, -180.0]`
    - Append a `BarycentricMapping` component to project these coordinate arrays onto the active deformable leg surface mesh.
 
-3. **Force Point Actuator Bounds**
+2. **Position Effectors (Markers)**
+   - Instantiate a `PositionEffector` object and attach it as a component to the core center-part marker node (`Markers`).
+   - Instantiate a secondary `PositionEffector` object and attach it to the tracked leg marker node (`markerLeg`).
+ 
+3. **Sphere Tactile Sensing**
    - Inside the predefined `FPANode` loop, append a `SphereROI` topological constraint component.
-   - Wire the initial center position field to consume the `fpa_sphere_position` vector variable.
-   - Point its target mechanical link property directly to the active mechanical object state using the `@MechanicalObject.position` reference path.
+   - Set the initial center position with the `fpa_sphere_position` vector variable.
+   - Point its target mechanical link property directly to the active mechanical object state using `@MechanicalObject.position`.
+
+4. **Force Point Actuator**
    - Create a `ForcePointActuator` instance tied explicitly to the computed ROI subset indices using `@SphereROI.indices`. Set operational limits by configuring `maxForceVariation = 100` alongside your calculated safety margins for `maxForce` and `minForce`.
 
 ::::
@@ -126,6 +104,7 @@ To simulate you should:
 2. Launch the real-time interactive graphic simulation workspace to evaluate positional tracking performance:
 
 #runsofa-button("assets/labs/lab_sensingmuca/lab_sensingmuca.py")
+
 ---
 
 :::::
