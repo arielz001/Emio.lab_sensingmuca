@@ -12,6 +12,10 @@ The pipeline integrates two distinct sensory tracking systems:
 
 2. **Local Tactile Matrix (MuCa Sensor):** A MuCa matrix wrapped around the leg captures local deformation forces. Continuous sub-pixel coordinates are reconstructed from discrete taxel activations using a centroid interpolation model (now in 3D).
 
+The modified Leg can be appreciated in the following image:
+
+![](assets/labs/lab_sensingmuca/data/images/ModifiedLeg.png){width=60% .center}
+
 ---
 
 ###  Sensorization
@@ -21,6 +25,7 @@ Before modifying the controller, it is vital to understand how spatial reference
 * **Rigid Transformations via Markers:** The `Markers` and `markerLeg` nodes receive real-time optical tracking frames from external AprilTag detectors. In the simulation, these markers act as **Effectors**, moving the physical object transforms the virtual constraints dynamically.
 
 * **Surface Point Projection (`PointsOnSurface`):** A point cloud representing the MuCa sensor geometry (`PointsOnSurface.txt`) is loaded and permanently bound to the leg using **Barycentric Mapping**. If the leg bends or deforms, these virtual surface points track the underlying finite element mesh.
+
 
 ---
 

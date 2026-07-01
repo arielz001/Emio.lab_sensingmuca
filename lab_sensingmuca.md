@@ -34,7 +34,7 @@ You can find in each code differents TODOs to guide your implementation.
 
 ![](assets/labs/lab_sensingmuca/data/images/authors/arielzunigasantana.png){width="15%" align="right" style="margin:25px"}
 
-**Ariel Zuniga Santana** is currentlty a PhD student at the O'Higgins University, in Chili.
+**Ariel Zuniga Santana** is currently a PhD student at the O'Higgins University, in Chili.
 
 </br>
 </br>
@@ -43,7 +43,7 @@ You can find in each code differents TODOs to guide your implementation.
 
 ![](assets/labs/lab_sensingmuca/data/images/authors/carlosandresrosellecerf.png){width="15%" align="right" style="margin:25px"}
 
-**Carlos Andres Rosel Lecerf** is currentlty a PhD student at the O'Higgins University, in Chili. 
+**Carlos Andres Rosel Lecerf** is currently a PhD student at the O'Higgins University, in Chili. 
 
 </br>
 </br>
