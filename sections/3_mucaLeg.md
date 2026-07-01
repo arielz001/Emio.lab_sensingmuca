@@ -2,17 +2,19 @@
 
 ## Leg adapted with MuCa
 
+For the following scene, you could acces to the official documentation [here]().
+
 This laboratory establishes a real-time touching sensing loop adapted to Emio. It bridges a physical deformable leg tracking environment with an interactive **SOFA (Simulation Open Framework Architecture)** simulation.
 
 The pipeline integrates two distinct sensory tracking systems:
 
 1. **Global Optical Tracking (AprilTags / Markers):** A camera array tracks rigid coordinate frames (Markers) placed on the physical setup. 
 
-2. **Local Tactile Matrix (MuCa Sensor):** A MuCa matrix wrapped around the leg captures local deformation forces. Continuous sub-pixel coordinates are reconstructed from discrete taxel activations using a centroid interpolation model.
+2. **Local Tactile Matrix (MuCa Sensor):** A MuCa matrix wrapped around the leg captures local deformation forces. Continuous sub-pixel coordinates are reconstructed from discrete taxel activations using a centroid interpolation model (now in 3D).
 
 ---
 
-###  The Sensory Infrastructure
+###  Sensorization
 
 Before modifying the controller, it is vital to understand how spatial reference frames interact within the `createScene` hierarchy:
 
@@ -22,7 +24,7 @@ Before modifying the controller, it is vital to understand how spatial reference
 
 ---
 
-### Mathematical Model: Continuous Centroid Mapping
+### Continuous Centroid Mapping
 
 To compute the interactive contact point without spatial pixelation, the discrete localized activations are converted into a single weighted contact center vector ($\mathbf{InterpolatedPosition}$):
 
