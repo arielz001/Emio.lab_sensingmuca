@@ -42,22 +42,17 @@ Your first task is to modify the scene topology within the `createScene` functio
 
 1. **Surface Point Projection Topology**
    - Create a child node named `PointsOnSurfaceNode` directly under the parent `LegTag` node.
-   - Instantiate the target mechanical object  `POSNodeMO` with the following rigid spatial calibration transforms to match the physical camera origin:
+   - Instantiate the target mechanical object  `POSNodeMO` with the following rigid spatial calibration transforms to match the orientation of the leg in EMIO:
      - `translation = [100.0, 0.0, 0.0]`
      - `rotation = [0.0, -90.0, -180.0]`
    - Append a `BarycentricMapping` component to project these coordinate arrays onto the active deformable leg surface mesh.
 
-2. **Position Effectors (Markers)**
-   - Instantiate a `PositionEffector` object and attach it as a component to the core center-part marker node (`Markers`).
-   - Instantiate a secondary `PositionEffector` object and attach it to the tracked leg marker node (`markerLeg`).
- 
-3. **Sphere Tactile Sensing**
+
+2. **Sphere Tactile Sensing**
    - Inside the predefined `FPANode` loop, append a `SphereROI` topological constraint component.
    - Set the initial center position with the `fpa_sphere_position` vector variable.
    - Point its target mechanical link property directly to the active mechanical object state using `@MechanicalObject.position`.
 
-4. **Force Point Actuator**
-   - Create a `ForcePointActuator` instance tied explicitly to the computed ROI subset indices using `@SphereROI.indices`. Set operational limits by configuring `maxForceVariation = 100` alongside your calculated safety margins for `maxForce` and `minForce`.
 
 ::::
 
@@ -72,7 +67,8 @@ Locate the `onAnimateBeginEvent` routine inside the controller class. You must r
 #### Step-by-Step Task Specifications:
 1. **Array Validation:** Extract data length attributes from the parallel arrays: `IntensityList` (containing $i_i$ values) and `IdxList` (containing spatial data indices).
 
-2. **Mass Distribution Accumulation:** Compute the absolute cumulative mass denominator $V_{sum}$:
+2. **:** 
+$I_{sum}$:
    $$I_{sum} = \sum_{i=0}^{n-1} \text{IntensityList}[i]$$
 
 3. **Centroid Weight Vector Processing (3D Mapping):** Loop through your active neighbor matrices ($N$). Unlike the 2D workspace, you must calculate a 3D target coordinate vector ($\mathbf{InterpolatedPosition}$). For every iteration, retrieve the physical 3D vertex coordinate ($\mathbf{P}_{\text{linearIdx}}$) from the simulation mesh using the specific node index, normalize its scalar weight component, and update your cumulative accumulator:
@@ -91,6 +87,21 @@ Locate the `onAnimateBeginEvent` routine inside the controller class. You must r
 ::::
 
 ---
+
+:::: exercise
+
+**Exercise 3: Force Estimation**
+
+Now, you must to measure the forces applied to the robot's legs. We use the MuCa sensors to get the location of tactile sensing and the markers for estimate the magnitude of the forces.
+
+1. **Position Effectors (Markers)**
+   - Instantiate a `PositionEffector` object and attach it as a component to the core center-part marker node (`Markers`).
+   - Instantiate a secondary `PositionEffector` object and attach it to the tracked leg marker node (`markerLeg`).
+ 
+2. **Force Point Actuator**
+   - Create a `ForcePointActuator` instance tied explicitly to the computed ROI subset indices using `@SphereROI.indices`. Set operational limits by configuring `maxForceVariation = 100` alongside your calculated safety margins for `maxForce` and `minForce`.
+
+
 
 ### SIMULATION
 
