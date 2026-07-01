@@ -53,6 +53,9 @@ Your first task is to modify the scene topology within the `createScene` functio
    - Set the initial center position with the `fpa_sphere_position` vector variable.
    - Point its target mechanical link property directly to the active mechanical object state using `@MechanicalObject.position`.
 
+#open-button("assets/labs/lab_sensingmuca/lab_sensingmuca.py")
+
+#runsofa-button("assets/labs/lab_sensingmuca/lab_sensingmuca.py")
 
 ::::
 
@@ -83,7 +86,11 @@ $I_{sum}$:
      Multiply this spatial array by your calculated normalized weight factor $w_i$ and continuously increment your running vector total:
      $$\mathbf{InterpolatedPosition} \leftarrow \mathbf{InterpolatedPosition} + (\mathbf{P}_{\text{linearIdx}} \cdot w_i)$$
 
+
 #open-button("assets/labs/lab_sensingmuca/lab_sensingmuca.py")
+
+#runsofa-button("assets/labs/lab_sensingmuca/lab_sensingmuca.py")
+
 ::::
 
 ---
@@ -113,6 +120,9 @@ To simulate you should:
 #python-button("assets/labs/lab_sensingmuca/lab_mucaSensor.py")
 
 2. Launch the real-time interactive graphic simulation workspace to evaluate positional tracking performance:
+
+
+#open-button("assets/labs/lab_sensingmuca/lab_sensingmuca.py")
 
 #runsofa-button("assets/labs/lab_sensingmuca/lab_sensingmuca.py")
 

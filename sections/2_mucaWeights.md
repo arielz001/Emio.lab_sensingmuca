@@ -31,6 +31,11 @@ Your objective is to finalize the real-time processing loop within the visualize
 
 #open-button("assets/labs/lab_sensingmuca/lab_mucaSensor.py")
 
+You need to run the code to get intensities first:
+
+#python-button("assets/labs/lab_sensingmuca/modules/readMucaSensor.py")
+
+Now you can run the main script:
 #python-button("assets/labs/lab_sensingmuca/lab_mucaSensor.py")
 
 ::::
